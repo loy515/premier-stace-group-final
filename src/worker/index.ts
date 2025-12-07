@@ -1,38 +1,27 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
+import { Hono } from 'hono'
+import { serveStatic } from 'hono/cloudflare-pages'
 
 type Bindings = {
   DB: D1Database;
 }
 
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono<{ Bindings: Bindings }>()
 
-app.use("/*", cors());
-
-app.get("/api/shipments/:shipmentId", async (c) => {
-  const shipmentId = c.req.param("shipmentId");
-  
+// API Route
+app.get('/api/shipments/:shipmentId', async (c) => {
+  const { shipmentId } = c.req.param()
   try {
-    const shipmentResult = await c.env.DB.prepare(
-      `SELECT * FROM shipments WHERE shipment_id = ?`
-    ).bind(shipmentId).first();
+    const shipment = await c.env.DB.prepare('SELECT * FROM shipments WHERE shipment_id = ?').bind(shipmentId).first()
+    if (!shipment) return c.json({ error: 'Not Found' }, 404)
 
-    if (!shipmentResult) {
-      return c.json({ error: "Shipment not found" }, 404);
-    }
-
-    const historyResult = await c.env.DB.prepare(
-      `SELECT * FROM location_history WHERE shipment_id = ? ORDER BY timestamp DESC`
-    ).bind(shipmentId).all();
-
-    return c.json({
-      shipment: shipmentResult,
-      history: historyResult.results || []
-    });
-  } catch (error: any) {
-    console.error("Error fetching shipment:", error.message);
-    return c.json({ error: "Failed to fetch shipment details." }, 500);
+    const history = await c.env.DB.prepare('SELECT * FROM location_history WHERE shipment_id = ? ORDER BY timestamp DESC').bind(shipmentId).all()
+    return c.json({ shipment, history: history.results || [] })
+  } catch (e: any) {
+    return c.json({ error: e.message }, 500)
   }
-});
+})
 
-export default app;
+// Serve the frontend application
+app.get('*', serveStatic())
+
+export default app
