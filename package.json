@@ -4,8 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/worker/index.ts --local",
-    "deploy": "wrangler deploy --minify src/worker/index.ts"
+    "dev": "vite",
+    "build": "npm run build:client && npm run build:worker",
+    "build:client": "vite build --outDir dist/client",
+    "build:worker": "vite build --ssr src/worker/index.ts --outDir dist/worker"
   },
   "dependencies": {
     "hono": "^4.4.12",
@@ -16,7 +18,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240712.0",
+    "@cloudflare/workers-types": "^4.20240725.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
