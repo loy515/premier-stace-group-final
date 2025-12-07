@@ -1,14 +1,12 @@
-# This is the name of your overall Cloudflare project.
 name = "premier-stace-group-final"
-
-# This tells Wrangler where your backend API code lives.
-main = "src/worker/index.ts"
-
-# This ensures compatibility with Cloudflare's systems.
 compatibility_date = "2024-07-25"
 
-# This section defines your D1 database with its real address.
+# This tells Pages to treat the 'dist/client' folder as the website
+[pages]
+# This is the folder that contains your built frontend
+build_output_dir = "./dist/client"
+
 [[d1_databases]]
-binding = "DB" # This is the NAME your code uses (c.env.DB)
-database_name = "premier-stace-group-db"
-database_id = "e8997007-5f59-4cbd-abd1-140d9412a9cb" # YOUR UNIQUE DATABASE ID
+binding = "DB"
+database_name = "premier-stace-prod-db"
+database_id = "e8997007-5f59-4cbd-abd1-140d9412a9cb" # YOUR REAL ID
