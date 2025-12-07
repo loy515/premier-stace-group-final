@@ -1,30 +1,13 @@
 {
-  "name": "premier-stace-group-final",
+  "name": "premier-stace-victory",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "npm run build:client && npm run build:worker",
-    "build:client": "vite build --outDir dist/client",
-    "build:worker": "vite build --ssr src/worker/index.ts --outDir dist/worker"
+    "dev": "wrangler dev src/worker/index.ts --local",
+    "deploy": "wrangler deploy --minify src/worker/index.ts",
+    "build": "vite build"
   },
-  "dependencies": {
-    "hono": "^4.4.12",
-    "lucide-react": "^0.400.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.1",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240725.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.4",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.1",
-    "wrangler": "^3.62.0"
-  }
+  "dependencies": { "hono": "^4.4.12", "lucide-react": "^0.400.0", "react": "^18.3.1", "react-dom": "^18.3.1", "react-router-dom": "^6.24.1" },
+  "devDependencies": { "@cloudflare/workers-types": "^4.20240725.0", "@vitejs/plugin-react": "^4.3.1", "autoprefixer": "^10.4.19", "postcss": "^8.4.39", "tailwindcss": "^3.4.4", "typescript": "^5.5.3", "vite": "^5.3.1", "wrangler": "^3.62.0" }
 }
