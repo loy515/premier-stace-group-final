@@ -1,12 +1,10 @@
-name = "premier-stace-group-final"
+name = "premier-stace-victory"
 compatibility_date = "2024-07-25"
 
-# This tells Pages to treat the 'dist/client' folder as the website
 [pages]
-# This is the folder that contains your built frontend
-build_output_dir = "./dist/client"
+build_output_dir = "./dist"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "premier-stace-prod-db"
-database_id = "e8997007-5f59-4cbd-abd1-140d9412a9cb" # YOUR REAL ID
+database_id = "e8997007-5f59-4cbd-abd1-140d9412a9cb"
